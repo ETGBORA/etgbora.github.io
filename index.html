@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ETG BORA PLATFORM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --haki-koyu: #2E3A22;
+    --haki-koyu2: #48592F;
+    --zemin: #E7DEC3;
+    --kart-zemin: #F2EBD3;
+    --yazi: #2C2312;
+    --yazi-soft: #5A4C33;
+    --altin: #C08A28;
+    --rust: #9C5A34;
+    --krem: #F6F0DE;
+  }
+
+  *{ box-sizing: border-box; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation: none !important; transition: none !important; }
+  }
+
+  body{
+    margin:0;
+    background: var(--zemin);
+    color: var(--yazi);
+    font-family: 'Inter', Arial, sans-serif;
+    line-height: 1.6;
+  }
+
+  h1,h2,h3{
+    font-family: 'Fraunces', Georgia, serif;
+    margin: 0;
+    color: var(--yazi);
+  }
+
+  a{ color: inherit; }
+
+  /* ================= HERO ================= */
+  .hero{
+    position: relative;
+    background: radial-gradient(120% 140% at 20% 0%, var(--haki-koyu2) 0%, var(--haki-koyu) 60%);
+    color: var(--krem);
+    padding: 60px 24px 50px;
+    overflow: hidden;
+  }
+
+  .hero-ic{
+    max-width: 760px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 22px;
+    position: relative;
+    z-index: 2;
+    animation: hero-girer 0.9s ease-out both;
+  }
+
+  @keyframes hero-girer{
+    from{ opacity:0; transform: translateY(14px); }
+    to{ opacity:1; transform: translateY(0); }
+  }
+
+  /* --- plak (vinyl) --- */
+  .plak-cerceve{
+    width: 138px;
+    height: 138px;
+    flex-shrink: 0;
+  }
+
+  .plak{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background:
+      repeating-radial-gradient(
+        circle at center,
+        #1c1c1c 0px, #1c1c1c 2px,
+        #2b2b2b 2px, #2b2b2b 4px
+      );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+    animation: don 9s linear infinite;
+  }
+
+  @keyframes don{
+    from{ transform: rotate(0deg); }
+    to{ transform: rotate(360deg); }
+  }
+
+  .plak-etiket{
+    width: 54%;
+    height: 54%;
+    border-radius: 50%;
+    background: var(--altin);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 1.5em;
+    color: var(--haki-koyu);
+    overflow: hidden;
+  }
+
+  .plak-etiket img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none; /* kendi fotoğrafınızı eklerken block yapın */
+  }
+
+  .plak-igne{
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--zemin);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+  }
+
+  .hero h1{
+    font-size: clamp(1.9em, 6vw, 2.6em);
+    letter-spacing: 0.5px;
+    line-height: 1.15;
+  }
+
+  .hero p{
+    color: #D6CEA9;
+    font-size: 1.03em;
+    max-width: 46ch;
+    margin: 10px 0 0;
+  }
+
+  /* --- ekolayzer çubukları --- */
+  .ekolayzer{
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 22px;
+    margin-top: 6px;
+  }
+
+  .ekolayzer span{
+    width: 4px;
+    background: var(--altin);
+    border-radius: 2px;
+    animation: zipla 1.1s ease-in-out infinite;
+  }
+  .ekolayzer span:nth-child(1){ height: 40%; animation-delay: 0s; }
+  .ekolayzer span:nth-child(2){ height: 90%; animation-delay: 0.15s; background: var(--rust); }
+  .ekolayzer span:nth-child(3){ height: 60%; animation-delay: 0.3s; }
+  .ekolayzer span:nth-child(4){ height: 100%; animation-delay: 0.45s; background: var(--rust); }
+  .ekolayzer span:nth-child(5){ height: 55%; animation-delay: 0.6s; }
+
+  @keyframes zipla{
+    0%, 100%{ transform: scaleY(0.5); }
+    50%{ transform: scaleY(1); }
+  }
+
+  /* --- ses dalgası ayırıcı --- */
+  .dalga-ayirici{
+    display: block;
+    width: 100%;
+    height: 28px;
+    margin-top: -2px;
+  }
+
+  /* ================= GÖVDE ================= */
+  main{
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  section{
+    padding: 50px 0;
+    border-bottom: 1px solid rgba(44,35,18,0.12);
+  }
+
+  section:last-of-type{ border-bottom: none; }
+
+  section h2{
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-bottom: 18px;
+  }
+
+  .hakkimda p{
+    font-size: 1.08em;
+    color: var(--yazi-soft);
+    max-width: 62ch;
+  }
+
+  /* ================= PROJELER ================= */
+  .proje{
+    padding: 20px 0 20px 22px;
+    border-left: 3px solid var(--altin);
+    margin-bottom: 4px;
+    transition: border-color 0.25s ease, transform 0.25s ease;
+  }
+
+  .proje:nth-child(2n){
+    border-left-color: var(--rust);
+  }
+
+  .proje + .proje{
+    border-top: 1px solid rgba(44,35,18,0.08);
+  }
+
+  .proje:hover{
+    transform: translateX(4px);
+  }
+
+  .proje h3{
+    font-size: 1.15em;
+    margin-bottom: 6px;
+  }
+
+  .proje p{
+    color: var(--yazi-soft);
+    margin: 0;
+    font-size: 0.98em;
+  }
+
+  /* ================= İLETİŞİM ================= */
+  .iletisim-listesi{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .iletisim-listesi a{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 14px 18px;
+    background: var(--kart-zemin);
+    border-radius: 6px;
+    border-left: 3px solid var(--altin);
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+
+  .iletisim-listesi a .ok{
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  .iletisim-listesi a:hover{
+    background: var(--krem);
+    transform: translateX(2px);
+  }
+
+  .iletisim-listesi a:hover .ok{
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  footer{
+    text-align: center;
+    padding: 30px 20px 40px;
+    color: var(--yazi-soft);
+    font-size: 0.88em;
+  }
+
+  @media (min-width: 620px){
+    .hero-ic{
+      flex-direction: row;
+      text-align: left;
+      align-items: center;
+    }
+    .hero p{ margin-top: 8px; }
+    .ekolayzer{ justify-content: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="hero">
+    <div class="hero-ic">
+      <div class="plak-cerceve">
+        <div class="plak">
+          <div class="plak-etiket">
+            <img src="foto.jpg" alt="Profil fotoğrafı">
+            <span>EB</span>
+          </div>
+          <div class="plak-igne"></div>
+        </div>
+      </div>
+      <div>
+        <h1>ETG BORA PLATFORM</h1>
+        <p>Web geliştirmeyi öğreniyorum ve burada projelerimi, öğrendiklerimi paylaşıyorum.</p>
+        <div class="ekolayzer" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+
+    <svg class="dalga-ayirici" viewBox="0 0 800 28" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0,14 Q20,2 40,14 T80,14 T120,14 T160,14 T200,14 T240,14 T280,14 T320,14 T360,14 T400,14 T440,14 T480,14 T520,14 T560,14 T600,14 T640,14 T680,14 T720,14 T760,14 T800,14"
+            fill="none" stroke="#E7DEC3" stroke-width="2" opacity="0.5"/>
+    </svg>
+  </div>
+
+  <main>
+
+    <section class="hakkimda">
+      <h2>Hakkımda</h2>
+      <p>
+        Merhaba! Bu site, web geliştirmeyi sıfırdan öğrenirken kendimi
+        geliştirdiğim kişisel platformum. Zamanla buraya yeni projeler,
+        beceriler ve deneyimler ekleyeceğim.
+      </p>
+    </section>
+
+    <section class="projelerim">
+      <h2>Projelerim</h2>
+
+      <div class="proje">
+        <h3>Proje 1</h3>
+        <p>Bu projenin kısa açıklaması buraya gelecek.</p>
+      </div>
+
+      <div class="proje">
+        <h3>Proje 2</h3>
+        <p>Bu projenin kısa açıklaması buraya gelecek.</p>
+      </div>
+
+      <div class="proje">
+        <h3>Proje 3</h3>
+        <p>Bu projenin kısa açıklaması buraya gelecek.</p>
+      </div>
+    </section>
+
+    <section class="iletisim">
+      <h2>İletişim</h2>
+      <div class="iletisim-listesi">
+        <a href="mailto:email@ornek.com">E-posta gönder <span class="ok">→</span></a>
+        <a href="https://github.com/etgbora" target="_blank">GitHub profilim <span class="ok">→</span></a>
+        <a href="https://linkedin.com/in/etgbora" target="_blank">LinkedIn profilim <span class="ok">→</span></a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>© 2026 ETG BORA PLATFORM</p>
+  </footer>
+
+</body>
+</html>
