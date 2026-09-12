@@ -16,8 +16,7 @@
 ===================================================== */
 
 :root{
-  --bg:        #0B1526;   /* fırtına gecesi lacivert */
-  --bg-soft:   #12213A;   /* biraz daha açık, hover/panel zemini */
+  --bg-soft:   #12213A;   /* panel zemini */
   --ice:       #EDF3F7;   /* ana yazı rengi */
   --mist:      #93A8BE;   /* ikincil / soluk yazı */
   --gust:      #F2B84D;   /* sıcak vurgu — bulut arası ışık */
@@ -36,11 +35,104 @@ html{ scroll-behavior: smooth; }
 
 body{
   margin: 0;
-  background: var(--bg);
+  background: transparent;
   color: var(--ice);
   font-family: 'Inter', Arial, sans-serif;
   font-size: 16px;
   line-height: 1.7;
+}
+
+/* ================= YENİ KUZEY IŞIKLARI (GÖNDERİLEN GÖRSELE GÖRE) ================= */
+.aurora-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: #020513; /* Gece mavisi/siyah derin zemin */
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.aurora-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  /* Kaydırma ivmesiyle sıvı gibi hareket edecek kapsayıcı */
+}
+
+/* Işık perdeleri - Görseldeki gibi şerit formunda */
+.aurora-curtain {
+  position: absolute;
+  width: 140vw;
+  height: 45vh;
+  filter: blur(35px); /* Belirginlik için blur değeri azaltıldı */
+  opacity: 0.85;
+  border-radius: 50% 50% 0 0;
+  animation: auroraWave 12s infinite alternate ease-in-out;
+}
+
+/* 1. Mavi üst katman */
+.aurora-blue {
+  top: 15%;
+  left: -20%;
+  background: linear-gradient(90deg, rgba(0,0,0,0), rgba(10, 80, 255, 0.9), rgba(0, 180, 255, 0.7), rgba(0,0,0,0));
+  transform: rotate(-12deg);
+}
+
+/* 2. Parlak Cyan/Yeşil Ana Şerit (Görselin ortası) */
+.aurora-green {
+  top: 35%;
+  left: -10%;
+  height: 50vh;
+  background: linear-gradient(90deg, rgba(0,0,0,0), rgba(0, 255, 150, 0.95), rgba(0, 200, 255, 0.8), rgba(0,0,0,0));
+  transform: rotate(-18deg);
+  animation-duration: 16s;
+  animation-direction: alternate-reverse;
+}
+
+/* 3. Mor/Pembe Alt Yansıma (Görselin alt kısmı) */
+.aurora-purple {
+  top: 55%;
+  left: 0%;
+  height: 40vh;
+  background: linear-gradient(90deg, rgba(0,0,0,0), rgba(150, 20, 255, 0.85), rgba(200, 50, 255, 0.6), rgba(0,0,0,0));
+  transform: rotate(-10deg);
+  animation-duration: 20s;
+}
+
+/* Çizgili "Şerit/Ray" Dokusu - Işık hüzmelerini belirginleştirir */
+.aurora-rays {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    80deg,
+    rgba(255, 255, 255, 0.06) 0px,
+    rgba(255, 255, 255, 0.06) 2px,
+    transparent 4px,
+    transparent 20px
+  );
+  -webkit-mask-image: linear-gradient(180deg, transparent 15%, black 45%, black 65%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 15%, black 45%, black 65%, transparent 100%);
+  mix-blend-mode: overlay;
+  animation: rayShift 30s linear infinite;
+}
+
+/* Yazıların okunabilir kalması için hafif karanlık vinyet */
+.aurora-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(2, 5, 19, 0.6) 100%);
+}
+
+@keyframes auroraWave {
+  0% { transform: rotate(-15deg) translateY(0) scaleY(1); }
+  50% { transform: rotate(-12deg) translateY(-30px) scaleY(1.1); }
+  100% { transform: rotate(-18deg) translateY(20px) scaleY(0.9); }
+}
+
+@keyframes rayShift {
+  from { background-position: 0 0; }
+  to { background-position: 100vw 0; }
 }
 
 h1, h2, h3{
@@ -59,8 +151,7 @@ button:focus-visible,
   border-radius: 4px;
 }
 
-/* ================= AÇILIR PANEL (KATEGORİLER) ================= */
-
+/* ================= AÇILIR PANEL ================= */
 html{ perspective: 1400px; }
 
 #menuBtn{
@@ -69,7 +160,8 @@ html{ perspective: 1400px; }
   left: 18px;
   width: 46px;
   height: 38px;
-  background: var(--bg-soft);
+  background: rgba(18, 33, 58, 0.8);
+  backdrop-filter: blur(8px);
   border: 1px solid var(--line);
   border-radius: 8px;
   cursor: pointer;
@@ -102,7 +194,8 @@ html{ perspective: 1400px; }
   width: 300px;
   max-width: 82vw;
   height: 100vh;
-  background: var(--bg-soft);
+  background: rgba(18, 33, 58, 0.95);
+  backdrop-filter: blur(10px);
   border-right: 1px solid var(--line);
   box-shadow: 20px 0 40px rgba(0,0,0,0.45);
   transform-origin: left center;
@@ -133,17 +226,16 @@ html{ perspective: 1400px; }
   border-radius: 6px;
   border-left: 2px solid var(--squall);
   cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 .kategori:nth-child(2n){ border-left-color: var(--gust); }
 .kategori:hover{
-  background: rgba(255,255,255,0.04);
+  background: rgba(255,255,255,0.08);
   color: var(--ice);
   transform: translateX(4px);
 }
 
 /* ================= HERO ================= */
-
 .hero{
   position: relative;
   min-height: 92vh;
@@ -154,12 +246,9 @@ html{ perspective: 1400px; }
   text-align: center;
   padding: 100px 24px 60px;
   overflow: hidden;
-  background:
-    radial-gradient(60% 50% at 82% 12%, rgba(242,184,77,0.16) 0%, rgba(242,184,77,0) 70%),
-    var(--bg);
+  background: radial-gradient(60% 50% at 82% 12%, rgba(242,184,77,0.12) 0%, rgba(242,184,77,0) 70%);
 }
 
-/* rüzgar çizgileri — sahnenin tek sürekli hareketi */
 .ruzgar{
   position: absolute;
   inset: 0;
@@ -176,11 +265,11 @@ html{ perspective: 1400px; }
   transform: rotate(-5deg);
   animation: es linear infinite;
 }
-.ruzgar span:nth-child(1){ top: 18%; width: 45%; animation-duration: 16s; animation-delay: 0s; }
-.ruzgar span:nth-child(2){ top: 34%; width: 70%; animation-duration: 22s; animation-delay: -6s; opacity: 0.22; }
-.ruzgar span:nth-child(3){ top: 52%; width: 38%; animation-duration: 14s; animation-delay: -3s; background: linear-gradient(90deg, transparent, var(--gust), transparent); }
-.ruzgar span:nth-child(4){ top: 66%; width: 55%; animation-duration: 25s; animation-delay: -12s; opacity: 0.18; }
-.ruzgar span:nth-child(5){ top: 80%; width: 40%; animation-duration: 18s; animation-delay: -8s; }
+.ruzgar span:nth-child(1){ top: 18%; width: 45%; animation-duration: 16s; }
+.ruzgar span:nth-child(2){ top: 34%; width: 70%; animation-duration: 22s; opacity: 0.22; }
+.ruzgar span:nth-child(3){ top: 52%; width: 38%; animation-duration: 14s; background: linear-gradient(90deg, transparent, var(--gust), transparent); }
+.ruzgar span:nth-child(4){ top: 66%; width: 55%; animation-duration: 25s; opacity: 0.18; }
+.ruzgar span:nth-child(5){ top: 80%; width: 40%; animation-duration: 18s; }
 
 @keyframes es{
   from{ transform: translateX(0) rotate(-5deg); }
@@ -191,6 +280,10 @@ html{ perspective: 1400px; }
   position: relative;
   z-index: 2;
   max-width: 780px;
+  background: rgba(2, 5, 19, 0.4);
+  padding: 40px;
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
 }
 
 .hero-ad{
@@ -201,6 +294,7 @@ html{ perspective: 1400px; }
   text-transform: uppercase;
   opacity: 0;
   animation: geliyor 1s cubic-bezier(.16,1,.3,1) 0.1s forwards;
+  text-shadow: 0 4px 20px rgba(0,0,0,0.5);
 }
 
 .hero-cizgi{
@@ -214,12 +308,13 @@ html{ perspective: 1400px; }
 }
 
 .hero-ic p{
-  color: var(--mist);
-  font-size: 1.08em;
+  color: var(--ice);
+  font-size: 1.1em;
   max-width: 46ch;
   margin: 0 auto;
   opacity: 0;
   animation: gelsin 0.8s ease-out 1.1s forwards;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.6);
 }
 
 @keyframes geliyor{
@@ -235,7 +330,7 @@ html{ perspective: 1400px; }
   left: 50%;
   transform: translateX(-50%);
   z-index: 2;
-  color: var(--mist);
+  color: var(--ice);
   font-size: 0.85em;
   display: flex;
   flex-direction: column;
@@ -251,16 +346,21 @@ html{ perspective: 1400px; }
 }
 
 /* ================= GÖVDE ================= */
-
 main{
   max-width: 660px;
   margin: 0 auto;
   padding: 0 24px;
+  position: relative;
+  z-index: 2;
 }
 
 section{
-  padding: 64px 0;
+  padding: 64px 24px;
   border-top: 1px solid var(--line);
+  background: rgba(2, 5, 19, 0.5);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  margin-bottom: 40px;
 }
 
 section > h2{
@@ -281,24 +381,23 @@ section > h2::before{
 }
 
 .hakkimda p{
-  color: var(--mist);
+  color: var(--ice);
   font-size: 1.05em;
   max-width: 60ch;
 }
-.hakkimda strong{ color: var(--ice); font-weight: 600; }
+.hakkimda strong{ color: var(--gust); font-weight: 600; }
 
 /* ================= PROJELER ================= */
-
 .rota-oge{
   display: flex;
   gap: 16px;
-  padding: 18px 4px;
+  padding: 18px 12px;
   border-radius: var(--radius);
   transition: background 0.25s ease, transform 0.25s ease;
 }
 .rota-oge + .rota-oge{ border-top: 1px solid var(--line); }
 .rota-oge:hover{
-  background: var(--bg-soft);
+  background: rgba(255, 255, 255, 0.08);
   transform: translateX(4px);
 }
 .rota-ok{
@@ -321,7 +420,6 @@ section > h2::before{
 }
 
 /* ================= İLETİŞİM ================= */
-
 .iletisim-listesi{
   display: flex;
   flex-direction: column;
@@ -333,14 +431,16 @@ section > h2::before{
   justify-content: space-between;
   text-decoration: none;
   font-weight: 500;
-  padding: 16px 6px;
+  padding: 16px 12px;
   border-top: 1px solid var(--line);
   transition: color 0.2s ease, padding-left 0.2s ease;
 }
 .iletisim-listesi a:first-child{ border-top: none; }
 .iletisim-listesi a:hover{
   color: var(--gust);
-  padding-left: 10px;
+  padding-left: 16px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 8px;
 }
 .iletisim-listesi a .ok{
   opacity: 0;
@@ -358,18 +458,34 @@ footer{
   padding: 40px 20px 50px;
   color: var(--mist);
   font-size: 0.85em;
+  position: relative;
+  z-index: 2;
 }
 
 @media (max-width: 480px){
   .hero{ min-height: 88vh; padding-top: 80px; }
-  section{ padding: 48px 0; }
+  section{ padding: 32px 16px; }
 }
 
 </style>
 </head>
 <body>
 
-<!-- ================= AÇILIR PANEL (KATEGORİLER) ================= -->
+<!-- ================= YENİ KUZEY IŞIKLARI (AURORA) ARKA PLANI ================= -->
+<div class="aurora-bg" aria-hidden="true">
+  <div class="aurora-container">
+    <!-- Işık Renk Katmanları -->
+    <div class="aurora-curtain aurora-blue"></div>
+    <div class="aurora-curtain aurora-green"></div>
+    <div class="aurora-curtain aurora-purple"></div>
+    <!-- Çizgili Işık Hüzmesi (Ray) Efekti -->
+    <div class="aurora-rays"></div>
+  </div>
+  <!-- Okunabilirliği Korumak İçin Vinyet -->
+  <div class="aurora-vignette"></div>
+</div>
+
+<!-- ================= AÇILIR PANEL ================= -->
 <button id="menuBtn" onclick="togglePanel()" aria-label="Menüyü aç">
   <span></span>
   <span></span>
@@ -476,13 +592,42 @@ footer{
     panel.classList.toggle('open');
   }
 
-  // ---- Aşağı kaydır ipucu: kaydırınca sönümlensin ----
+  // ---- Aşağı kaydır ipucu ----
   const kaydirIpucu = document.querySelector('.asagi-kaydir');
   if (kaydirIpucu) {
     window.addEventListener('scroll', () => {
       kaydirIpucu.style.opacity = window.scrollY > 60 ? '0' : '0.8';
     }, { passive: true });
   }
+
+  // ---- Suda Bırakılan İz (Sıvı Aurora) Scroll Efekti ----
+  const auroraContainer = document.querySelector('.aurora-container');
+  let lastScrollY = window.scrollY;
+  let currentDrag = 0;
+  let targetDrag = 0;
+
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.scrollY;
+    const deltaY = currentScroll - lastScrollY;
+    lastScrollY = currentScroll;
+    
+    // Kaydırma ivmesine göre hedeflenen sıvı hareketini belirle
+    targetDrag += deltaY * 0.6; 
+  });
+
+  function renderAuroraFizik() {
+    // Sönümleme
+    targetDrag *= 0.85; 
+    // Yaylanma
+    currentDrag += (targetDrag - currentDrag) * 0.1;
+    
+    if(auroraContainer) {
+      auroraContainer.style.transform = `translateY(${currentDrag}px)`;
+    }
+    requestAnimationFrame(renderAuroraFizik);
+  }
+  
+  renderAuroraFizik();
 </script>
 
 </body>
