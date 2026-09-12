@@ -42,12 +42,12 @@ body{
   line-height: 1.7;
 }
 
-/* ================= YENİ KUZEY IŞIKLARI (GÖNDERİLEN GÖRSELE GÖRE) ================= */
+/* ================= YENİ KUZEY IŞIKLARI ================= */
 .aurora-bg {
   position: fixed;
   inset: 0;
   z-index: -1;
-  background: #020513; /* Gece mavisi/siyah derin zemin */
+  background: #020513; 
   overflow: hidden;
   pointer-events: none;
 }
@@ -57,21 +57,18 @@ body{
   inset: 0;
   width: 100%;
   height: 100%;
-  /* Kaydırma ivmesiyle sıvı gibi hareket edecek kapsayıcı */
 }
 
-/* Işık perdeleri - Görseldeki gibi şerit formunda */
 .aurora-curtain {
   position: absolute;
   width: 140vw;
   height: 45vh;
-  filter: blur(35px); /* Belirginlik için blur değeri azaltıldı */
+  filter: blur(35px); 
   opacity: 0.85;
   border-radius: 50% 50% 0 0;
   animation: auroraWave 12s infinite alternate ease-in-out;
 }
 
-/* 1. Mavi üst katman */
 .aurora-blue {
   top: 15%;
   left: -20%;
@@ -79,7 +76,6 @@ body{
   transform: rotate(-12deg);
 }
 
-/* 2. Parlak Cyan/Yeşil Ana Şerit (Görselin ortası) */
 .aurora-green {
   top: 35%;
   left: -10%;
@@ -90,7 +86,6 @@ body{
   animation-direction: alternate-reverse;
 }
 
-/* 3. Mor/Pembe Alt Yansıma (Görselin alt kısmı) */
 .aurora-purple {
   top: 55%;
   left: 0%;
@@ -100,7 +95,6 @@ body{
   animation-duration: 20s;
 }
 
-/* Çizgili "Şerit/Ray" Dokusu - Işık hüzmelerini belirginleştirir */
 .aurora-rays {
   position: absolute;
   inset: 0;
@@ -117,7 +111,6 @@ body{
   animation: rayShift 30s linear infinite;
 }
 
-/* Yazıların okunabilir kalması için hafif karanlık vinyet */
 .aurora-vignette {
   position: absolute;
   inset: 0;
@@ -286,15 +279,21 @@ html{ perspective: 1400px; }
   backdrop-filter: blur(4px);
 }
 
-.hero-ad{
-  font-size: clamp(3rem, 12vw, 7rem);
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  line-height: 0.95;
-  text-transform: uppercase;
-  opacity: 0;
-  animation: geliyor 1s cubic-bezier(.16,1,.3,1) 0.1s forwards;
-  text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+/* YENİ GÖRSEL AMBLEM VE 180° DÖNÜŞ ANİMASYONU */
+.hero-logo{
+  width: 250px;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+  display: block;
+  filter: drop-shadow(0 8px 24px rgba(0,0,0,0.6));
+  transform-style: preserve-3d;
+  animation: don180 4s ease-in-out infinite alternate;
+}
+
+@keyframes don180 {
+  0% { transform: perspective(1000px) rotateY(0deg); }
+  100% { transform: perspective(1000px) rotateY(180deg); }
 }
 
 .hero-cizgi{
@@ -317,10 +316,6 @@ html{ perspective: 1400px; }
   text-shadow: 0 2px 10px rgba(0,0,0,0.6);
 }
 
-@keyframes geliyor{
-  from{ opacity: 0; transform: translateY(18px) skewX(-6deg); filter: blur(6px); }
-  to{ opacity: 1; transform: translateY(0) skewX(0deg); filter: blur(0); }
-}
 @keyframes acilir{ to{ transform: scaleX(1); } }
 @keyframes gelsin{ from{ opacity: 0; transform: translateY(10px); } to{ opacity: 1; transform: translateY(0); } }
 
@@ -474,14 +469,11 @@ footer{
 <!-- ================= YENİ KUZEY IŞIKLARI (AURORA) ARKA PLANI ================= -->
 <div class="aurora-bg" aria-hidden="true">
   <div class="aurora-container">
-    <!-- Işık Renk Katmanları -->
     <div class="aurora-curtain aurora-blue"></div>
     <div class="aurora-curtain aurora-green"></div>
     <div class="aurora-curtain aurora-purple"></div>
-    <!-- Çizgili Işık Hüzmesi (Ray) Efekti -->
     <div class="aurora-rays"></div>
   </div>
-  <!-- Okunabilirliği Korumak İçin Vinyet -->
   <div class="aurora-vignette"></div>
 </div>
 
@@ -503,7 +495,8 @@ footer{
     <span></span><span></span><span></span><span></span><span></span>
   </div>
   <div class="hero-ic">
-    <h1 class="hero-ad">ETG BORA</h1>
+    <!-- EKLENEN YENİ AMBLEM -->
+    <img src="image.png" alt="Logo" class="hero-logo">
     <div class="hero-cizgi"></div>
     <p>Web geliştirmeyi öğreniyorum ve öğrendiğim her şeyi, projelerimi burada topluyorum.</p>
   </div>
